@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -45,7 +44,7 @@ public class BaseDeDonnees {
 			e.printStackTrace();
 		}
 
-		System.out.println("Well Created!");
+		System.out.println("Fichier 'baseDeDonnées.xls' --> Well Created!");
 
 	}
 

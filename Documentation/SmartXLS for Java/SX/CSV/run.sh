@@ -1,1 +1,0 @@
-java -Dapplication.defaultlaf=system -cp ../SX.jar CSVSample

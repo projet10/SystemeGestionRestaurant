@@ -1,4 +1,4 @@
-package authentification;
+package Authentification;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JPanel;
@@ -11,7 +11,12 @@ import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JButton;
 
-import baseDeDonneesApachePOI.BaseDeDonneesApachePOI;
+import InterfaceCuisinier.InterfaceCuisinier;
+import InterfaceGerant.InterfaceGerant;
+import InterfaceServeur.InterfaceServeur;
+
+
+//import baseDeDonneesApachePOI.BaseDeDonneesApachePOI;
 
 
 import java.awt.Font;
@@ -26,6 +31,7 @@ public class Authentification extends JFrame {
 	private JTextField entreeMotDePasse = null;
 	private JButton connexion = null;
 	private JLabel erreurAuthentification = null;
+	public String identifiantvalide;
 	/**
 	 * This method initializes entreeIdentifiant	
 	 * 	
@@ -95,8 +101,7 @@ public class Authentification extends JFrame {
 			connexion.setName("Connexion");
 			connexion.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-					erreurAuthentification.setText("");
+					System.out.println("actionPerformed()");
 					if((entreeIdentifiant.getText().equals("entrer identifiant")||(entreeMotDePasse.getText().equals("entrer mot de passe"))||(entreeIdentifiant.getText().equals(""))||(entreeMotDePasse.getText().equals(""))))
 					{
 						erreurAuthentification.setForeground(Color.RED);
@@ -116,19 +121,75 @@ public class Authentification extends JFrame {
 
 				private void testAuthentification(String entreeIdentifiant, String entreeMotDePasse) {
 					// TODO Auto-generated method stub
-					BaseDeDonneesApachePOI dataBase = new BaseDeDonneesApachePOI();
-					if(entreeIdentifiant.equals("admin"/*dataBase.getValueCellule("baseDeDonnees", "login", 1, 1)*/))
+//					BaseDeDonneesApachePOI dataBase = new BaseDeDonneesApachePOI();
+					boolean identifiantConnecte = false;
+					if(entreeIdentifiant.equals("gerant"/*dataBase.getValueCellule("baseDeDonnees", "login", 1, 1)*/))
 					{
-						if(entreeMotDePasse.equals("admin"))
+						if(entreeMotDePasse.equals("gerant"))
 						{
 							System.out.println("Connexion pour l'utilisateur : "+entreeIdentifiant);
-							System.exit(0);
+							identifiantvalide = entreeIdentifiant;
+							erreurAuthentification.setText("");
+							InterfaceGerant interfaceGerant = new InterfaceGerant(entreeIdentifiant);
+							interfaceGerant.initialize();
+							interfaceGerant.setLocationRelativeTo(null);
+							interfaceGerant.setVisible(true);
+							identifiantConnecte = true; //Permet de ne pas rentrer dans les autres else
 						}
 					}
 					else
 					{
-						erreurAuthentification.setForeground(Color.RED);
-						erreurAuthentification.setText("Votre identifiant et/ou Mot de passe sont incorrects");
+						if((identifiantConnecte == false))
+						{
+							erreurAuthentification.setForeground(Color.RED);
+							erreurAuthentification.setText("Votre identifiant et/ou Mot de passe sont incorrects");
+						}
+					}
+					
+					if(entreeIdentifiant.equals("serveur"/*dataBase.getValueCellule("baseDeDonnees", "login", 1, 1)*/))
+					{
+						if(entreeMotDePasse.equals("serveur"))
+						{
+							System.out.println("Connexion pour l'utilisateur : "+entreeIdentifiant);
+							identifiantvalide = entreeIdentifiant;
+							erreurAuthentification.setText("");
+							InterfaceServeur interfaceServeur = new InterfaceServeur(entreeIdentifiant);
+							interfaceServeur.initialize();
+							interfaceServeur.setLocationRelativeTo(null);
+							interfaceServeur.setVisible(true);
+							identifiantConnecte = true; //Permet de ne pas rentrer dans les autres else
+						}
+					}
+					else
+					{
+						if((identifiantConnecte == false))
+						{
+							erreurAuthentification.setForeground(Color.RED);
+							erreurAuthentification.setText("Votre identifiant et/ou Mot de passe sont incorrects");
+						}
+					}
+					
+					if(entreeIdentifiant.equals("cuisinier"/*dataBase.getValueCellule("baseDeDonnees", "login", 1, 1)*/))
+					{
+						if(entreeMotDePasse.equals("cuisinier"))
+						{
+							System.out.println("Connexion pour l'utilisateur : "+entreeIdentifiant);
+							identifiantvalide = entreeIdentifiant;
+							erreurAuthentification.setText("");
+							InterfaceCuisinier interfaceCuisinier = new InterfaceCuisinier(entreeIdentifiant);
+							interfaceCuisinier.initialize();
+							interfaceCuisinier.setLocationRelativeTo(null);
+							interfaceCuisinier.setVisible(true);
+							identifiantConnecte = true; //Permet de ne pas rentrer dans les autres else
+						}
+					}
+					else
+					{
+						if((identifiantConnecte == false))
+						{
+							erreurAuthentification.setForeground(Color.RED);
+							erreurAuthentification.setText("Votre identifiant et/ou Mot de passe sont incorrects");
+						}
 					}
 					
 				}
@@ -168,8 +229,6 @@ public class Authentification extends JFrame {
 		this.setSize(300, 200);
 		this.setLocationRelativeTo(null);
 		this.setName("authentification");
-		this.setAlwaysOnTop(true);
-		this.setEnabled(true);
 		this.setResizable(false);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Authentification");
